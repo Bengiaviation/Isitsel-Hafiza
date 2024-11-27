@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayısal Hafıza Testi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f8ff;
+        }
+
+        #circle {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background-color: #4caf50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        #number {
+            font-size: 72px; /* Yazı boyutu küçültüldü */
+            font-weight: bold;
+            color: white;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #333;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sayısal Hafıza Testi</h1>
+    <div id="circle">
+        <div id="number">Hazır mısınız?</div>
+    </div>
+    <div id="message"></div>
+    <button onclick="startTest()">Teste Başla</button>
+
+    <script>
+        // iOS'ta uyumluluk için let yerine var kullanılabilir, ancak modern tarayıcılar let ve const'u destekler.
+        var currentIndex = 0;
+        var previousNumber = null; // Önceki rakam
+        var results = [];
+        var totalNumbers = 10; // Gösterilecek toplam sayı
+
+        function startTest() {
+            currentIndex = 0;
+            previousNumber = null; // İlk sayı için başlangıç değeri
+            results = []; // Sonuçları sıfırla
+            document.getElementById('message').textContent = ""; // Mesajları temizle
+            showNumber();
+        }
+
+        function showNumber() {
+            if (currentIndex < totalNumbers) {
+                // Rastgele bir rakam oluştur (0-9 arası)
+                var number = Math.floor(Math.random() * 10);
+                document.getElementById('number').textContent = number;
+
+                // Eğer bu ilk sayıysa veya bir önceki sayıdan büyükse ekle
+                if (previousNumber === null || number > previousNumber) {
+                    results.push(number); // Listeye ekle
+                }
+
+                previousNumber = number; // Önceki sayıyı güncelle
+                currentIndex++;
+                setTimeout(showNumber, 1000); // 1 saniye bekle
+            } else {
+                document.getElementById('number').textContent = "Test Tamamlandı!";
+                document.getElementById('message').textContent = results.join(" - "); // Sonuçları göster
+            }
+        }
+    </script>
+</body>
+</html>
